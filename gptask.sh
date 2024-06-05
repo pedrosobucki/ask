@@ -37,7 +37,12 @@ fi
 
 change_config() {
 	if [ "$1" = "ls" ]; then
-		tail -n +2 $SCRIPT_PATH/config
+		offset=2
+		if [ "$2" = "-a" ]; then
+			offset=$((offset - 1))
+		fi
+
+		tail -n +$offset $SCRIPT_PATH/config
 		return 0
 	fi
 	${EDITOR:-vi} $SCRIPT_PATH/config
@@ -47,6 +52,6 @@ case $1 in
     hist) source $SCRIPT_PATH/hist.sh;;
     rpt) $SCRIPT_PATH/gptask.sh hist rpt $2;;
     cln) $SCRIPT_PATH/gptask.sh hist rm $2;;
-    config) change_config $2;;
+	    config) change_config $2 $3;;
     *) source $SCRIPT_PATH/ask.sh;;
 esac
