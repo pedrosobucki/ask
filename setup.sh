@@ -33,10 +33,10 @@ know_current_dir=${know_current_dir:-true}
 echo -e "KEY=$key\nMODEL=$model\nMAX_TOKENS=$max_tokens\nTEMPERATURE=$temperature\nMAX_CHAT_MEMORY=$max_chat_memory\nKNOW_CURRENT_DIR=$know_current_dir" >> config
 
 case $SHELL in
-	/bin/bash) FILE=$HOME/.bashrc;;
-	/bin/zsh) FILE=$HOME/.zshrc;;
-	/bin/fish) FILE=$HOME/.config/fish/config.fish;;
-	/bin/ash) FILE=/etc/profile;;
+	/bin/bash|/usr/bin/bash) FILE=$HOME/.bashrc;;
+	/bin/zsh|/usr/bin/zsh) FILE=$HOME/.zshrc;;
+	/bin/fish|/usr/bin/fish) FILE=$HOME/.config/fish/config.fish;;
+	/bin/ash|/usr/bin/ash) FILE=/etc/profile;;
 	*) echo "Could not locate shell to create shortcuts"; exit 1;;
 esac
 
