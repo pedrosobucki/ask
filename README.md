@@ -81,8 +81,40 @@ Configuration parameters are:
 
 Configuration variables from `config` and/or `config.example` files are always overwriten by flags sent when calling the script.
 
+## Editing configurations
+Besides editing the `config` file directly, you can also use the CLI to do it.
+
+Run the command
+```bash
+ask config
+```
+to automatically open your default terminal editor and make changes to your configuration file.
+
+
+You can also just check the current configuration with the command:
+```bash
+ask config ls
+```
+which returns every configurations besides your secret key:
+```
+MODEL=gpt-4o
+MAX_TOKENS=200
+TEMPERATURE=0.2
+MAX_CHAT_MEMORY=5
+KNOW_CURRENT_DIR=true
+```
+Or use the flag `-a`, which also returns the key:
+```
+KEY=[YOUR SECRET KEY]
+MODEL=gpt-4o
+MAX_TOKENS=200
+TEMPERATURE=0.2
+MAX_CHAT_MEMORY=5
+KNOW_CURRENT_DIR=true
+```
+
 # Cleaning previous conversations
-Previous promps and responses are kept in the 'log' file. You can clean all previous conversations by deleting the 'log' file or simply running the command `askcln`.
+Previous promps and responses are kept in the 'hist/chat1.json' file. You can clean all previous conversations by deleting the 'hist/chat1.json' file or simply running the command `ask cln`.
 
 # References
 - [OpenAI API Docs](https://platform.openai.com/docs/api-reference/introduction)

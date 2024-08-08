@@ -52,6 +52,6 @@ case $1 in
     hist) source $SCRIPT_PATH/hist.sh;;
     rpt) $SCRIPT_PATH/gptask.sh hist rpt $2;;
     cln) $SCRIPT_PATH/gptask.sh hist rm $2;;
-	    config) change_config $2 $3;;
+    config) change_config $2 $3;;
     *) source $SCRIPT_PATH/ask.sh;;
 esac
