@@ -34,6 +34,7 @@ There are optional flags for overwriting some configuration fields
 - **-t**: Changes max tokens returned by request (_MAX\_TOKENS_)
 - **-m**: Changes model used in request (_MODEL_)
 - **-T**: Changes temperature for promp processing (_TEMPERATURE_)
+- **-r**: Returns raw code, without any extra information or formatting
 
 the **-h** flag can be used to read about available flags directly from the script.
 
@@ -59,7 +60,15 @@ $ ask "what is this?" < gptask.sh
 "This is a bash script that interacts with the OpenAI API to generate responses based on user input. The script reads from standard input or command line arguments, sends a request to the OpenAI API, and prints the response. It also handles configuration variables, provides help information, and logs previous interactions."
 ```
 
-# Configuration file
+## Generating code
+Using the `-r` flag, code can easily be outputed to a file.
+
+```bash
+$ ask -r "javascript code for consuming an SSE route, including imports" > sse_connection.js
+```
+
+# Configuration
+## Configuration file
 Configuration options are stored in the `config` file, created during the setup process. If any configuration is missing from the `config` file, the one contained in `config.example` will be used instead.
 
 Configuration parameters are:

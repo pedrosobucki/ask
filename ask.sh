@@ -14,7 +14,7 @@ PROMPT='{
 }'
 
 help_info() {
-	echo -e "Flags:\n\t-h: Display help info\n\t-t: Changes max tokens returned by request (_MAX\_TOKENS_)\n\t-m: Changes model used in request (_MODEL_)\n\t-T: Changes temperature for promp processing (_TEMPERATURE_)"
+	echo -e "Flags:\n\t-h: Display help info\n\t-t: Changes max tokens returned by request (_MAX\_TOKENS_)\n\t-m: Changes model used in request (_MODEL_)\n\t-T: Changes temperature for promp processing (_TEMPERATURE_)\n\t-r: Returns RAW code, without any extra information or formatting"
 	exit 0
 }
 
