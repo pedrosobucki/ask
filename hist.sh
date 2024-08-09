@@ -58,10 +58,19 @@ rm_history() {
     rm $HIST_DIR/$1.json
 }
 
+change_chat() {
+    if [ ! -f $HIST_DIR/$1.json ]; then
+        echo '{"hist":[]}' > $HIST_DIR/$1.json
+    fi
+
+    echo "CURRENT_CHAT=$1" > $SCRIPT_PATH/.session
+}
+
 case $2 in
     ls) list_history;;
-    rm) rm_history ${3:-chat1};;
-    show) show_history ${3:-chat1};;
-    rpt) repeat_answer ${3:-chat1};; 
+    ch) change_chat ${3:-$CURRENT_CHAT};;
+    rm) rm_history ${3:-$CURRENT_CHAT};;
+    show) show_history ${3:-$CURRENT_CHAT};;
+    rpt) repeat_answer ${3:-$CURRENT_CHAT};; 
     *) list_history;;
 esac

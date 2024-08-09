@@ -67,6 +67,12 @@ Using the `-r` flag, code can easily be outputed to a file.
 $ ask -r "javascript code for consuming an SSE route, including imports" > sse_connection.js
 ```
 
+## Repeating answers
+You can repeat the last answer to stdout with the command
+```bash
+ask rpt
+```
+
 # Configuration
 ## Configuration file
 Configuration options are stored in the `config` file, created during the setup process. If any configuration is missing from the `config` file, the one contained in `config.example` will be used instead.
@@ -113,8 +119,30 @@ MAX_CHAT_MEMORY=5
 KNOW_CURRENT_DIR=true
 ```
 
+# Chat history management
+**ask** allows multiple chats to be created and managed, besides the default `chat1`.
+
+## Changing current chat
+Through this command you can change your current used chat. If a chat whith that name does not exist, it will be created.
+```bash
+ask hist ch [CHAT_NAME]
+```
+
+## Listing chats
+```bash
+ask hist ls
+```
+
+## Checking chat content
+```bash
+ask hist show [CHAT_NAME=CURRENT_CHAT]
+```
+
 # Cleaning previous conversations
-Previous promps and responses are kept in the 'hist/chat1.json' file. You can clean all previous conversations by deleting the 'hist/chat1.json' file or simply running the command `ask cln`.
+Previous promps and responses are kept in the 'hist/[YOUR CURRENT SESSION].json' file. You can clean all previous conversations by deleting the file or simply running the command
+```bash
+ask cln [CHAT_NAME=CURRENT_CHAT]`
+```
 
 # References
 - [OpenAI API Docs](https://platform.openai.com/docs/api-reference/introduction)

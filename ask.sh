@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# retrieves previous prompts context 
+PREV_CONTEXT=$(cat $HIST_DIR/$CURRENT_CHAT.json | jq '.hist')
+PREV_CONTEXT=${PREV_CONTEXT:1:-1}
+
+if [ ! -z "$PREV_CONTEXT" ]; then
+    PREV_CONTEXT=$PREV_CONTEXT,
+fi
+
 OUTPUT=/dev/stdout
 
 if [ -z $KEY ]; then
@@ -80,19 +88,19 @@ fi
 MESSAGE=$(echo -E $RESPONSE | jq '.choices | .[] | .message')
 
 # saves prompt
-LOG=$(cat $HIST_DIR/chat1.json | jq ".hist += [$PROMPT]")
-echo -E $LOG > $HIST_DIR/chat1.json
+LOG=$(cat $HIST_DIR/$CURRENT_CHAT.json | jq ".hist += [$PROMPT]")
+echo -E $LOG > $HIST_DIR/$CURRENT_CHAT.json
 
 ANSWER=$(echo -E $MESSAGE | jq '.content')
 
 # saves context
-LOG=$(cat $HIST_DIR/chat1.json | jq ".hist += [$MESSAGE]")
-echo -E $LOG > $HIST_DIR/chat1.json
+LOG=$(cat $HIST_DIR/$CURRENT_CHAT.json | jq ".hist += [$MESSAGE]")
+echo -E $LOG > $HIST_DIR/$CURRENT_CHAT.json
 
 # erases old chat history
-if [ "$(cat $HIST_DIR/chat1.json | jq '.hist | length')" == "$((MAX_CHAT_MEMORY * 2 + 1))" ]; then
-    LOG=$(cat $HIST_DIR/chat1.json | jq '.hist | del(.[-2:])')
-    echo -E $LOG > $HIST_DIR/chat1.json
+if [ "$(cat $HIST_DIR/$CURRENT_CHAT.json | jq '.hist | length')" == "$((MAX_CHAT_MEMORY * 2 + 1))" ]; then
+    LOG=$(cat $HIST_DIR/$CURRENT_CHAT.json | jq '.hist | del(.[-2:])')
+    echo -E $LOG > $HIST_DIR/$CURRENT_CHAT.json
 fi
 
 # parsed json response to regular string

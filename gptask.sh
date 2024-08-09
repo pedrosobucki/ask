@@ -3,16 +3,15 @@
 SCRIPT_PATH=$(dirname $0)
 HIST_DIR=$SCRIPT_PATH/hist
 
-if [ ! -f $HIST_DIR/chat1.json ]; then
-    echo '{"hist":[]}' > $HIST_DIR/chat1.json
+# creates session file if not exists and loads contents
+if [ ! -f $SCRIPT_PATH/.session ]; then
+    echo 'CURRENT_CHAT=chat1' > $SCRIPT_PATH/.session
 fi
 
-# retrieves previous prompts context 
-PREV_CONTEXT=$(cat $HIST_DIR/chat1.json | jq '.hist')
-PREV_CONTEXT=${PREV_CONTEXT:1:-1}
+export $(grep -v '^#' $SCRIPT_PATH/.session | xargs)
 
-if [ ! -z "$PREV_CONTEXT" ]; then
-    PREV_CONTEXT=$PREV_CONTEXT,
+if [ ! -f $HIST_DIR/$CURRENT_CHAT.json ]; then
+    echo '{"hist":[]}' > $HIST_DIR/$CURRENT_CHAT.json
 fi
 
 # imports config variables
