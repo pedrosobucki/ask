@@ -22,7 +22,7 @@ get_json_history() {
 
 list_history() {
     echo "Available chat history:"
-    ls $HIST_DIR -1 | sed 's/\.json$//'  
+    ls $HIST_DIR -1 | sed -e 's/\.json$//' -e "s/^$CURRENT_CHAT$/\* $CURRENT_CHAT/"
 }
 
 show_history() {
