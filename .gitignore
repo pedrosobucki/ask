@@ -1,3 +1,5 @@
-config
-log
-hist/*
+config.json
+session.json
+chats/*
+target
+.vscode

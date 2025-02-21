@@ -1,0 +1,9 @@
+{
+  "openai_api_key": "",
+  "xai_api_key": "",
+  "anthropic_api_key": "",
+  "provider": "gpt",
+  "model": "gpt-4o",
+  "max_tokens": 500,
+  "temperature": 0.2
+}
