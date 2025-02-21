@@ -36,7 +36,7 @@ pub struct Cli {
 }
 
 #[derive(Subcommand, Debug)]
-enum Commands {
+pub enum Commands {
     /// Clear the chat history
     Clr,
 }

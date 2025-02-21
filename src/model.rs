@@ -9,9 +9,9 @@ use clap::ValueEnum;
 #[clap(rename_all = "lowercase")]
 #[serde(rename_all = "lowercase")]
 pub enum Provider {
-    Gpt,
-    Claude,
-    Grok,
+    OpenAI,
+    Anthropic,
+    XAI,
 }
 
 #[derive(Debug)]
@@ -26,15 +26,15 @@ pub struct ModelData {
 
 #[derive(Debug)]
 pub enum Model {
-    Gpt {data: ModelData},
-    Claude {data: ModelData},
-    Grok {data: ModelData},
+    OpenAI {data: ModelData},
+    Anthropic {data: ModelData},
+    XAI {data: ModelData},
 }
 
 impl Model {
     pub async fn request(&self, messages: &mut Vec<Message>) -> String {
         let completion = match self {
-            Model::Gpt {data} => {
+            Model::OpenAI {data} => {
                 let response = generic_chat_completion_request(data, messages).await.expect("Failed to get response from OpenAI API!");
                 let new_message: Message = response["choices"][0]["message"].clone().into();
                 let answer: String = new_message.content.clone();
@@ -44,10 +44,10 @@ impl Model {
 
                 answer
             },
-            Model::Claude {data: _} => String::from("mock claude response"),
-            Model::Grok {data: _} => String::from("mock grok response"),
-            // Model::Claude {data} => generic_chat_completion_request(data).await.expect("Failed to get response from Anthropic API!"),
-            // Model::Grok {data} => generic_chat_completion_request(data).await.expect("Failed to get response from xAI API!"),
+            Model::Anthropic {data: _} => String::from("mock Anthropic response"),
+            Model::XAI {data: _} => String::from("mock XAI response"),
+            // Model::Anthropic {data} => generic_chat_completion_request(data).await.expect("Failed to get response from Anthropic API!"),
+            // Model::XAI {data} => generic_chat_completion_request(data).await.expect("Failed to get response from xAI API!"),
         };
 
         completion
@@ -56,9 +56,9 @@ impl Model {
 
 pub fn build_model(config: &Config) -> Model {
     let (api_key,request_uri): (String, String) = match config.provider {
-        Provider::Gpt => (config.openai_api_key.clone(), String::from("https://api.openai.com/v1/chat/completions")),
-        Provider::Claude => (config.xai_api_key.clone(), String::from("")),
-        Provider::Grok => (config.anthropic_api_key.clone(), String::from("")),
+        Provider::OpenAI => (config.openai_api_key.clone(), String::from("https://api.openai.com/v1/chat/completions")),
+        Provider::Anthropic => (config.xai_api_key.clone(), String::from("")),
+        Provider::XAI => (config.anthropic_api_key.clone(), String::from("")),
     };
 
     if api_key.is_empty() {
@@ -75,9 +75,9 @@ pub fn build_model(config: &Config) -> Model {
     };
 
     match config.provider {
-        Provider::Gpt => Model::Gpt {data},
-        Provider::Claude => Model::Claude {data},
-        Provider::Grok => Model::Grok {data},
+        Provider::OpenAI => Model::OpenAI {data},
+        Provider::Anthropic => Model::Anthropic {data},
+        Provider::XAI => Model::XAI {data},
     }
 }
 
