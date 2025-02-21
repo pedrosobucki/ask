@@ -5,6 +5,12 @@ use std::fs;
 pub fn clear(session: &Session) {
   //deletes file
   let file_path: String = format!("chats/{}.json", &session.current_chat);
+
+  if !std::path::Path::new(&file_path).exists() {
+    print!("Chat \"{}\" history doesn't exist\n", &session.current_chat);
+    return;
+  }
+
   let error_msg: String = format!("Failed to read {} history file!", &session.current_chat);
   fs::remove_file(&file_path).expect(&error_msg);
 

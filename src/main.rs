@@ -17,7 +17,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let mut session: Session = session::get_session();
     let args = Cli::parse_and_dispatch(&config);
     
-    dbg!(&args);
+    // dbg!(&args);
 
     match args {
         CliCommand::Clear => hist::clear(&session),

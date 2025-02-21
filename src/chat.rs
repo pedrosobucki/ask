@@ -3,6 +3,8 @@ use serde_json::{json, Value};
 use std::fs::File;
 use std::io::{Read, Write};
 
+use crate::session::Session;
+
 const SYSTEM_PROMPT: &str = "You are a helpful linux shell application which will have its output response printed in the terminal, so use only characters which are terminal friendly whe writing your answer. You also should write concise messages, as the user will prompt you again if more detailed information is needed.";
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -21,8 +23,7 @@ impl From<Value> for Message {
     }
 }
 
-pub fn get_chat_history() -> Vec<Message> {
-    let current_chat: &str = "chat1";
+pub fn get_chat_history(current_chat: &str) -> Vec<Message> {
     let file_path: String = format!("chats/{}.json", current_chat);
     let error_msg: String = format!("Failed to read {} history file!", current_chat);
 
@@ -51,12 +52,11 @@ pub fn get_chat_history() -> Vec<Message> {
 }
 
 // Serialize to JSON and write to a file
-pub fn save_chat_history(messages: &Vec<Message>) {
-    let current_chat: &str = "chat1";
-    let file_path: String = format!("chats/{}.json", current_chat);
+pub fn save_chat_history(session: &Session) {
+    let file_path: String = format!("chats/{}.json", &session.current_chat);
     let error_msg: &str = "Failed to save chat history!";
     
     let mut file = File::create(&file_path).expect(error_msg);
-    let messages_json = json!({ "messages": messages });
+    let messages_json = json!({ "messages": session.messages });
     file.write_all(messages_json.to_string().as_bytes()).expect(error_msg);
 }
