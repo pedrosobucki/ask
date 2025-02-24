@@ -69,7 +69,7 @@ impl Model {
                 }
 
                 json.as_object().expect("Failed to convert JSON to object").get("content");
-                let content = json.get("content").expect("failed")[0].get("text").expect("failed").to_string();
+                let content = json.get("content").expect("failed")[0].get("text").and_then(|v| v.as_str()).expect("failed").to_string();
 
                 let new_message: Message = Message {
                     role: "assistant".to_string(),
@@ -141,6 +141,7 @@ async fn openai_chat_completion_request(model: &ModelData, messages: &mut Vec<Me
 
     Ok(response)
 }
+
 
 async fn anthropic_chat_completion_request(model: &ModelData, messages: &mut Vec<Message>) -> Result<Response, Box<dyn Error>> {
     // Create a client
