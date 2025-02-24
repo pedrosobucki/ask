@@ -5,7 +5,7 @@ use crate::session::Session;
 use crate::args::CompletionArgs;
 
 pub async fn ask(args: CompletionArgs, session: &mut Session, config: Config) {
-  let model: Model = model::build_model(&config);
+  let model: Model = model::build_model(&config, &args);
   let mut msg: String = args.prompt.clone();
 
   if args.raw {
