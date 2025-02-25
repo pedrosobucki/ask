@@ -23,6 +23,6 @@ pub async fn ask(args: CompletionArgs, session: &mut Session, config: Config) {
 
   let answer: String = model.request(&mut session.messages).await;
   session.save();
-  print!("{}", answer);
+  println!("{}", answer);
   // dbg!(&session);
 }

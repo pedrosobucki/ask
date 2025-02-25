@@ -23,9 +23,8 @@ impl From<Value> for Message {
     }
 }
 
-pub fn get_chat_history(current_chat: &str) -> Vec<Message> {
-    let file_path: String = format!("chats/{}.json", current_chat);
-    let error_msg: String = format!("Failed to read {} history file!", current_chat);
+pub fn get_chat_history(file_path: String) -> Vec<Message> {
+    let error_msg: String = format!("Failed to read {} history file!", file_path);
 
     // Check if file exists, if not return messages vector just with system prompt
     if !std::path::Path::new(&file_path).exists() {
@@ -53,7 +52,7 @@ pub fn get_chat_history(current_chat: &str) -> Vec<Message> {
 
 // Serialize to JSON and write to a file
 pub fn save_chat_history(session: &Session) {
-    let file_path: String = format!("chats/{}.json", &session.current_chat);
+    let file_path: String = session.current_chat_path();
     let error_msg: &str = "Failed to save chat history!";
     
     let mut file = File::create(&file_path).expect(error_msg);

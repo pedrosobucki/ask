@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 use crate::chat::Message;
-use std::{error::Error, process::exit};
+use std::error::Error;
 use clap::ValueEnum;
 use crate::args::CompletionArgs;
 use crate::config::Config;

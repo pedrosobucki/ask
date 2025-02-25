@@ -1,0 +1,13 @@
+Sounds good! If you need help with writing to a file in Rust, you can use `std::fs::File` and `std::io::Write`. Here's a quick example:
+
+```rust
+use std::fs::File;
+use std::io::Write;
+
+fn main() {
+    let mut file = File::create("output.txt").expect("Failed to create file");
+    writeln!(file, "Hello, file!").expect("Failed to write to file");
+}
+```
+
+Let me know if you run into any issues! 🚀
